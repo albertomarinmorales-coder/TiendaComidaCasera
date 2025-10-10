@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl text-amber-50 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
-            Local para recoger comida casera, especializados en carnes a la brasa
+            Comida casera para llevar. Especialidades en carnes a la brasa y platos tradicionales.
           </motion.p>
 
           {/* Stats */}
@@ -75,22 +75,24 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <motion.button
+            <motion.a
+              href="/menu"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="group bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl"
             >
-              <span>Comenzar Pedido Online</span>
+              <span>Ver Nuestro Menú</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
+            </motion.a>
             
-            <motion.button
+            <motion.a
+              href="tel:676453062"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="group bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"
             >
-              Llamar para Ordenar
-            </motion.button>
+              📞 Hacer Pedido
+            </motion.a>
           </motion.div>
         </motion.div>
 

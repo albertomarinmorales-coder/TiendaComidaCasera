@@ -18,8 +18,8 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-    title: 'El Buen Comerán - Asador Restaurante',
-    description: 'Disfruta de la mejor comida tradicional en nuestro asador restaurante',
+    title: 'Asador El Buen Comer - Comida Para Llevar',
+    description: 'Comida casera para llevar. Especialidades en carnes a la brasa y platos tradicionales. Haz tu pedido por teléfono.',
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="es" suppressHydrationWarning>
-            <body className={`${openSans.variable} ${playfairDisplay.variable} font-sans`}>
+            <body className={`${openSans.variable} ${playfairDisplay.variable} font-sans overflow-x-hidden`}>
                 <CartProvider>
                     <div className="flex flex-col min-h-screen">
                         <Header />

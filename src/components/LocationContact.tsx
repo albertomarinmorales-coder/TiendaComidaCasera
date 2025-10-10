@@ -16,7 +16,7 @@ export default function LocationContact() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-amber-800 mb-4 font-playfair">
-            Ubicación y Horarios
+            Encargos y Recogida
           </h2>
         </motion.div>
 
@@ -27,7 +27,7 @@ export default function LocationContact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-xl shadow-lg overflow-hidden h-[400px]"
+            className="bg-white rounded-xl shadow-lg overflow-hidden h-[400px] flex items-center justify-center"
           >
             <Map />
           </motion.div>
@@ -38,7 +38,7 @@ export default function LocationContact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-xl shadow-lg p-6 h-[400px] flex flex-col justify-start overflow-hidden"
+            className="bg-white rounded-xl shadow-lg p-6 h-[400px] flex flex-col justify-center"
           >
             <div className="flex items-center gap-3 mb-6">
               <Clock className="w-6 h-6 text-amber-600" />

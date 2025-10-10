@@ -11,32 +11,42 @@ const Navbar: React.FC = () => {
     const [showCart, setShowCart] = useState(false);
 
     return (
-        <nav className="bg-amber-800 p-4 shadow-lg relative z-40">
-            <div className="container mx-auto flex justify-between items-center">
-                <div className="text-amber-100 text-lg font-bold font-playfair">
-                    <Link href="/">Asador El Buen Comer</Link>
+        <nav className="bg-amber-800 p-4 shadow-lg relative z-40 overflow-x-hidden">
+            <div className="w-full max-w-full px-4 md:px-8 grid items-center gap-4" style={{ gridTemplateColumns: '1fr 3fr 1fr' }}>
+                {/* COLUMNA 1: Nombre del restaurante (izquierda) */}
+                <div className="justify-self-start">
+                    <div className="text-amber-100 text-lg font-bold font-playfair">
+                        <Link href="/">Asador El Buen Comer</Link>
+                    </div>
                 </div>
                 
-                <div className="flex items-center space-x-6">
-                    <div className="space-x-6">
-                        <Link href="/" className="text-amber-100 hover:text-amber-300 transition-colors duration-300 font-medium">Inicio</Link>
-                        <Link href="/menu" className="text-amber-100 hover:text-amber-300 transition-colors duration-300 font-medium">Menú</Link>
-                        <Link href="/#especialidades" className="text-amber-100 hover:text-amber-300 transition-colors duration-300 font-medium">Especialidades</Link>
-                        <Link href="/#ubicacion" className="text-amber-100 hover:text-amber-300 transition-colors duration-300 font-medium">Ubicación</Link>
+                {/* COLUMNA 2: Links de navegación (centro - MAS ANCHO) */}
+                <div className="justify-self-center w-full">
+                    <div className="flex items-center justify-center space-x-8 md:space-x-16 lg:space-x-20">
+                        <Link href="/" className="text-amber-100 hover:text-amber-300 transition-colors duration-300 font-medium whitespace-nowrap">
+                            Inicio
+                        </Link>
+                        <Link href="/menu" className="text-amber-100 hover:text-amber-300 transition-colors duration-300 font-medium whitespace-nowrap">
+                            Menú
+                        </Link>
+                        <Link href="/ubicacion" className="text-amber-100 hover:text-amber-300 transition-colors duration-300 font-medium whitespace-nowrap">
+                            Ubicación
+                        </Link>
                     </div>
+                </div>
 
-                    {/* Carrito en Navbar */}
-                    <div className="relative">
+                {/* COLUMNA 3: Carrito (derecha) */}
+                <div className="justify-self-end">
                         <motion.button
                             onClick={() => setShowCart(!showCart)}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="relative bg-amber-700 hover:bg-amber-600 text-white p-2 rounded-full transition-colors duration-300 flex items-center gap-2"
+                            className="relative bg-amber-700 hover:bg-amber-600 text-white p-2 rounded-full transition-colors duration-300 flex items-center gap-2 max-w-full"
                         >
                             <ShoppingCart size={20} />
                             {getTotalItems() > 0 && (
                                 <>
-                                    <span className="text-sm font-medium">
+                                    <span className="text-sm font-medium hidden sm:inline">
                                         {getTotalItems()} | {getTotalPrice().toFixed(2)}€
                                     </span>
                                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
@@ -137,7 +147,6 @@ const Navbar: React.FC = () => {
                             )}
                         </AnimatePresence>
                     </div>
-                </div>
             </div>
         </nav>
     );

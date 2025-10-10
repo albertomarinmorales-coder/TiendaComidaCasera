@@ -13,11 +13,9 @@ export default function Header() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   const navItems = [
-    { name: 'Inicio', href: '#inicio' },
-    { name: 'Pedido Online', href: '#pedido' },
-    { name: 'Ubicación', href: '#ubicacion' },
-    { name: 'Horarios', href: '#horarios' },
-    { name: 'Contacto', href: '#contacto' },
+    { name: 'Inicio', href: '/' },
+    { name: 'Menú', href: '/menu' },
+    { name: 'Ubicación', href: '/ubicacion' },
   ]
 
   return (
@@ -34,18 +32,18 @@ export default function Header() {
                 Asador El Buen Comer
               </h1>
               <p className="text-sm text-amber-700 dark:text-amber-300">
-                Comida Casera • Carnes a la Brasa
+                Comida Casera Para Llevar
               </p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-16 lg:space-x-20 xl:space-x-24 flex-1 justify-center max-w-2xl mx-auto" style={{ marginLeft: '65px' }}>
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-colors duration-200"
+                className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-colors duration-200 whitespace-nowrap"
               >
                 {item.name}
               </a>

@@ -46,15 +46,6 @@ const menuData: MenuCategory[] = [
     ]
   },
   {
-    id: 'guarnicion',
-    name: 'Guarnición',
-    items: [
-      { id: 4, name: 'Pimientos fritos', price: '6,00', image: '/images/menu/pimientos.jpg' },
-      { id: 5, name: 'Patatas Fritas Enteras', price: '4,50', image: '/images/menu/patatas.jpg' },
-      { id: 6, name: '1/2 Patatas Fritas', price: '3,50', image: '/images/menu/patatas.jpg' }
-    ]
-  },
-  {
     id: 'pollo-asado',
     name: 'Pollo Asados a la Leña',
     items: [
@@ -79,13 +70,6 @@ const menuData: MenuCategory[] = [
     ]
   },
   {
-    id: 'salsas',
-    name: 'Salsas',
-    items: [
-      { id: 13, name: 'Salsa Alioli', price: '1,20', image: '/images/menu/alioli.jpg' }
-    ]
-  },
-  {
     id: 'postres',
     name: 'Postres',
     items: [
@@ -93,6 +77,22 @@ const menuData: MenuCategory[] = [
       { id: 21, name: 'Arroz con Leche', price: '2,50', image: '/images/menu/arroz.jpg' },
       { id: 22, name: 'Flan', price: '2,50', image: '/images/menu/flan.jpg' },
       { id: 23, name: 'Natilla', price: '2,50', image: '/images/menu/natillas.jpg' }
+    ]
+  },
+  {
+    id: 'guarnicion',
+    name: 'Guarnición',
+    items: [
+      { id: 4, name: 'Pimientos fritos', price: '6,00', image: '/images/menu/pimientos.jpg' },
+      { id: 5, name: 'Patatas Fritas Enteras', price: '4,50', image: '/images/menu/patatas.jpg' },
+      { id: 6, name: '1/2 Patatas Fritas', price: '3,50', image: '/images/menu/patatas.jpg' }
+    ]
+  },
+  {
+    id: 'salsas',
+    name: 'Salsas',
+    items: [
+      { id: 13, name: 'Salsa Alioli', price: '1,20', image: '/images/menu/alioli.jpg' }
     ]
   },
   {

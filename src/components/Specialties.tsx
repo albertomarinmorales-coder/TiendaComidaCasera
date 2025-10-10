@@ -82,12 +82,20 @@ export default function Specialties() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="text-center mt-12"
         >
-          <Link
-            href="/menu"
-            className="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            Ver Menú Completo
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/especialidades"
+              className="inline-block bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              Ver Todas las Especialidades
+            </Link>
+            <Link
+              href="/menu"
+              className="inline-block bg-white text-amber-800 hover:bg-amber-50 border-2 border-amber-600 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              Ver Menú Completo
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>
