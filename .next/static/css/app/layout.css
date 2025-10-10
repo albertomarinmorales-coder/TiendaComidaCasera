@@ -841,6 +841,12 @@ video {
 .w-full {
   width: 100%;
 }
+.w-24 {
+  width: 6rem;
+}
+.min-w-0 {
+  min-width: 0px;
+}
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -899,6 +905,9 @@ video {
 .gap-8 {
   gap: 2rem;
 }
+.gap-2 {
+  gap: 0.5rem;
+}
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -936,6 +945,9 @@ video {
 }
 .overflow-hidden {
   overflow: hidden;
+}
+.break-words {
+  overflow-wrap: break-word;
 }
 .rounded-full {
   border-radius: 9999px;
@@ -1057,6 +1069,10 @@ video {
 .fill-current {
   fill: currentColor;
 }
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -1112,6 +1128,10 @@ video {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -1120,6 +1140,9 @@ video {
 }
 .pt-20 {
   padding-top: 5rem;
+}
+.text-left {
+  text-align: left;
 }
 .text-center {
   text-align: center;
@@ -1160,6 +1183,10 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 .font-bold {
   font-weight: 700;
@@ -1430,6 +1457,18 @@ html {
   .sm\:flex-row {
     flex-direction: row;
   }
+
+  .sm\:items-start {
+    align-items: flex-start;
+  }
+
+  .sm\:justify-between {
+    justify-content: space-between;
+  }
+
+  .sm\:text-right {
+    text-align: right;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1438,8 +1477,16 @@ html {
     height: 7rem;
   }
 
+  .md\:h-24 {
+    height: 6rem;
+  }
+
   .md\:w-28 {
     width: 7rem;
+  }
+
+  .md\:w-32 {
+    width: 8rem;
   }
 
   .md\:grid-cols-2 {
@@ -1448,6 +1495,10 @@ html {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:gap-4 {
+    gap: 1rem;
   }
 
   .md\:text-left {
@@ -1478,6 +1529,11 @@ html {
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
+
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -1488,6 +1544,14 @@ html {
 
   .lg\:hidden {
     display: none;
+  }
+
+  .lg\:h-28 {
+    height: 7rem;
+  }
+
+  .lg\:w-36 {
+    width: 9rem;
   }
 
   .lg\:grid-cols-2 {

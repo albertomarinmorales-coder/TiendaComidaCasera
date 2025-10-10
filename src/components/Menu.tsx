@@ -10,6 +10,7 @@ import { useState } from 'react'
  * Imágenes disponibles y mapeadas:
  * - Ensaladas: ensalada.jpg, salmorejo.jpg, ensaladilla.jpg
  * - Guarnición: pimientos.jpg, patatas.jpg  
+ * - Pollo Asado: secreto.jpg, pollo-brasa.jpg, pollo-asado.jpg, medio-pollo-brasa.jpg
  * - Pescados: bacalao.jpg
  * - Platos combinados: pechiga.jpg
  * - Salsas: alioli.jpg
@@ -53,10 +54,10 @@ const menuData: MenuCategory[] = [
     id: 'pollo-asado',
     name: 'Pollo Asados a la Leña',
     items: [
-      { id: 7, name: 'Secreto a la brasa (1 kg.)', description: 'Con ración grande patatas y alioli.', price: '20,95', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Secreto+Brasa' },
-      { id: 8, name: 'Pollo a la Brasa con Salsa de Limón', description: 'Salsa de tomillo y romero o almendras.', price: '11,00', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Pollo+Limon' },
-      { id: 9, name: 'Pollo Asada', description: 'A la leña con salsa de tomillo y romero o almendras', price: '11,00', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Pollo+Asada' },
-      { id: 10, name: '1/2 Pollo a la Brasa', description: 'Salsa de limón, tomillo y romero, almendras', price: '6,50', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Medio+Pollo' }
+      { id: 7, name: 'Secreto a la brasa (1 kg.)', description: 'Con ración grande patatas y alioli.', price: '20,95', image: '/images/menu/secreto.jpg' },
+      { id: 8, name: 'Pollo a la Brasa con Salsa de Limón', description: 'Salsa de tomillo y romero o almendras.', price: '11,00', image: '/images/menu/pollo-brasa.jpg' },
+      { id: 9, name: 'Pollo Asada', description: 'A la leña con salsa de tomillo y romero o almendras', price: '11,00', image: '/images/menu/pollo-asado.jpg' },
+      { id: 10, name: '1/2 Pollo a la Brasa', description: 'Salsa de limón, tomillo y romero, almendras', price: '6,50', image: '/images/menu/medio-pollo-brasa.jpg' }
     ]
   },
   {
