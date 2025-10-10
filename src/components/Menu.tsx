@@ -85,6 +85,16 @@ const menuData: MenuCategory[] = [
     ]
   },
   {
+    id: 'postres',
+    name: 'Postres',
+    items: [
+      { id: 20, name: 'Pan de Alcafar', price: '1,00', image: '/images/menu/pan.jpg' },
+      { id: 21, name: 'Arroz con Leche', price: '2,50', image: '/images/menu/arroz.jpg' },
+      { id: 22, name: 'Flan', price: '2,50', image: '/images/menu/flan.jpg' },
+      { id: 23, name: 'Natilla', price: '2,50', image: '/images/menu/natillas.jpg' }
+    ]
+  },
+  {
     id: 'bebidas',
     name: 'Bebidas',
     items: [
@@ -94,16 +104,6 @@ const menuData: MenuCategory[] = [
       { id: 17, name: 'Coca-Cola Zero Azúcar (2L)', price: '2,30', image: '/images/menu/zero.png' },
       { id: 18, name: 'Fanta Naranja (2L)', price: '2,30', image: '/images/menu/fanta-n.jpg' },
       { id: 19, name: 'Nestea sin azúcar (1.5 lt)', price: '2,20', image: '/images/menu/nestea.jpg' }
-    ]
-  },
-  {
-    id: 'postres',
-    name: 'Postres',
-    items: [
-      { id: 20, name: 'Pan de Alcafar', price: '1,00', image: '/images/menu/pan.jpg' },
-      { id: 21, name: 'Arroz con Leche', price: '2,50', image: '/images/menu/arroz.jpg' },
-      { id: 22, name: 'Flan', price: '2,50', image: '/images/menu/flan.jpg' },
-      { id: 23, name: 'Natilla', price: '2,50', image: '/images/menu/natillas.jpg' }
     ]
   }
 ]
@@ -244,28 +244,6 @@ export default function Menu() {
             </motion.div>
           ))}
         </div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-12"
-        >
-          <div className="bg-amber-800 text-white rounded-xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4 font-playfair">¿Listo para disfrutar?</h3>
-            <p className="mb-6 text-amber-100">
-              Llámanos para hacer tu pedido o reservar mesa
-            </p>
-            <a
-              href="tel:676453062"
-              className="inline-block bg-amber-600 hover:bg-amber-500 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              📞 676 45 30 62
-            </a>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
