@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useState, ReactNode } from 'react'
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 
 export interface CartItem {
   id: number
@@ -18,6 +18,7 @@ interface CartContextType {
   getTotalItems: () => number
   getTotalPrice: () => number
   clearCart: () => void
+  isLoaded: boolean
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -36,6 +37,36 @@ interface CartProviderProps {
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([])
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [hasMounted, setHasMounted] = useState(false)
+
+  // Verificar si el componente se ha montado del lado del cliente
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
+  // Cargar carrito desde localStorage al montar el componente
+  useEffect(() => {
+    if (hasMounted) {
+      const savedCart = localStorage.getItem('ebc-cart')
+      if (savedCart) {
+        try {
+          const parsedCart = JSON.parse(savedCart)
+          setCart(parsedCart)
+        } catch (error) {
+          console.error('Error parsing cart from localStorage:', error)
+        }
+      }
+      setIsLoaded(true)
+    }
+  }, [hasMounted])
+
+  // Guardar carrito en localStorage cada vez que cambie
+  useEffect(() => {
+    if (isLoaded && hasMounted) {
+      localStorage.setItem('ebc-cart', JSON.stringify(cart))
+    }
+  }, [cart, isLoaded, hasMounted])
 
   const addToCart = (item: Omit<CartItem, 'quantity'>) => {
     setCart(prevCart => {
@@ -85,6 +116,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const clearCart = () => {
     setCart([])
+    if (hasMounted) {
+      localStorage.removeItem('ebc-cart')
+    }
   }
 
   const value = {
@@ -94,7 +128,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     getItemQuantity,
     getTotalItems,
     getTotalPrice,
-    clearCart
+    clearCart,
+    isLoaded
   }
 
   return (

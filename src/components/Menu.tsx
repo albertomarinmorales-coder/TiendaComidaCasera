@@ -3,7 +3,9 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronUp, Plus, Minus, ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useCart } from '../contexts/CartContext'
+import ClientOnly from './ClientOnly'
 
 /**
  * ✅ COMPLETADO: MENÚ 100% CON IMÁGENES REALES
@@ -112,7 +114,8 @@ const menuData: MenuCategory[] = [
 export default function Menu() {
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set(['pollo-asado']))
   const [showCart, setShowCart] = useState(false)
-  const { cart, addToCart, removeFromCart, getItemQuantity, getTotalItems, getTotalPrice } = useCart()
+  const { cart, addToCart, removeFromCart, getItemQuantity, getTotalItems, getTotalPrice, isLoaded } = useCart()
+  const router = useRouter()
 
   const toggleCategory = (categoryId: string) => {
     const newOpenCategories = new Set(openCategories)
@@ -241,47 +244,49 @@ export default function Menu() {
                               
                               {/* Botones del carrito */}
                               <div className="flex items-center gap-2">
-                                {getItemQuantity(item.id) === 0 ? (
-                                  <motion.button
-                                    onClick={(e: React.MouseEvent) => {
-                                      e.stopPropagation()
-                                      addToCart(item)
-                                    }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 shadow-md hover:shadow-lg"
-                                  >
-                                    + Añadir
-                                  </motion.button>
-                                ) : (
-                                  <div className="flex items-center gap-2 bg-amber-100 rounded-lg p-1">
-                                    <motion.button
-                                      onClick={(e: React.MouseEvent) => {
-                                        e.stopPropagation()
-                                        removeFromCart(item.id)
-                                      }}
-                                      whileHover={{ scale: 1.1 }}
-                                      whileTap={{ scale: 0.9 }}
-                                      className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-300"
-                                    >
-                                      <Minus size={16} />
-                                    </motion.button>
-                                    <span className="text-amber-800 font-bold min-w-[24px] text-center">
-                                      {getItemQuantity(item.id)}
-                                    </span>
+                                <ClientOnly>
+                                  {getItemQuantity(item.id) === 0 ? (
                                     <motion.button
                                       onClick={(e: React.MouseEvent) => {
                                         e.stopPropagation()
                                         addToCart(item)
                                       }}
-                                      whileHover={{ scale: 1.1 }}
-                                      whileTap={{ scale: 0.9 }}
-                                      className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-300"
+                                      whileHover={{ scale: 1.05 }}
+                                      whileTap={{ scale: 0.95 }}
+                                      className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 shadow-md hover:shadow-lg"
                                     >
-                                      <Plus size={16} />
+                                      + Añadir
                                     </motion.button>
-                                  </div>
-                                )}
+                                  ) : (
+                                    <div className="flex items-center gap-2 bg-amber-100 rounded-lg p-1">
+                                      <motion.button
+                                        onClick={(e: React.MouseEvent) => {
+                                          e.stopPropagation()
+                                          removeFromCart(item.id)
+                                        }}
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-300"
+                                      >
+                                        <Minus size={16} />
+                                      </motion.button>
+                                      <span className="text-amber-800 font-bold min-w-[24px] text-center">
+                                        {getItemQuantity(item.id)}
+                                      </span>
+                                      <motion.button
+                                        onClick={(e: React.MouseEvent) => {
+                                          e.stopPropagation()
+                                          addToCart(item)
+                                        }}
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-300"
+                                      >
+                                        <Plus size={16} />
+                                      </motion.button>
+                                    </div>
+                                  )}
+                                </ClientOnly>
                               </div>
                             </div>
                           </div>
@@ -385,7 +390,13 @@ export default function Menu() {
                         {getTotalPrice().toFixed(2)}€
                       </span>
                     </div>
-                    <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-semibold transition-colors duration-300">
+                    <button 
+                      onClick={() => {
+                        setShowCart(false);
+                        router.push('/pedido');
+                      }}
+                      className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-semibold transition-colors duration-300"
+                    >
                       Realizar Pedido ({getTotalItems()} {getTotalItems() === 1 ? 'producto' : 'productos'})
                     </button>
                   </div>

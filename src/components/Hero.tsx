@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Star, Clock, Award } from 'lucide-react'
+import { ArrowRight, Star, Clock } from 'lucide-react'
 import heroImage from '../images/hero-image.jpg'
 
 const Hero: React.FC = () => {
@@ -55,16 +55,12 @@ const Hero: React.FC = () => {
           >
             <div className="flex items-center space-x-2">
               <Star className="w-5 h-5 text-yellow-400 fill-current" />
-              <span className="text-lg font-semibold">4.2/5 Estrellas</span>
+              <span className="text-lg font-semibold">4.3/5 Estrellas</span>
               <span className="text-sm text-amber-200">(309 reseñas)</span>
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="w-5 h-5 text-orange-400" />
               <span className="text-lg font-semibold">+25 Años</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Award className="w-5 h-5 text-orange-400" />
-              <span className="text-lg font-semibold">Premio Excelencia</span>
             </div>
           </motion.div>
 

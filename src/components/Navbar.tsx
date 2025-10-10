@@ -2,13 +2,17 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../contexts/CartContext';
+import { useCartDisplay } from '../hooks/useCartDisplay';
 
 const Navbar: React.FC = () => {
-    const { cart, getTotalItems, getTotalPrice, addToCart, removeFromCart } = useCart();
+    const { cart, addToCart, removeFromCart } = useCart();
     const [showCart, setShowCart] = useState(false);
+    const router = useRouter();
+    const cartDisplay = useCartDisplay();
 
     return (
         <nav className="bg-amber-800 p-4 shadow-lg relative z-40 overflow-x-hidden">
@@ -44,13 +48,13 @@ const Navbar: React.FC = () => {
                             className="relative bg-amber-700 hover:bg-amber-600 text-white p-2 rounded-full transition-colors duration-300 flex items-center gap-2 max-w-full"
                         >
                             <ShoppingCart size={20} />
-                            {getTotalItems() > 0 && (
+                            {cartDisplay.isReady && cartDisplay.hasItems && (
                                 <>
                                     <span className="text-sm font-medium hidden sm:inline">
-                                        {getTotalItems()} | {getTotalPrice().toFixed(2)}€
+                                        {cartDisplay.totalItems} | {cartDisplay.totalPrice.toFixed(2)}€
                                     </span>
                                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                                        {getTotalItems()}
+                                        {cartDisplay.totalItems}
                                     </span>
                                 </>
                             )}
@@ -135,11 +139,17 @@ const Navbar: React.FC = () => {
                                             <div className="flex justify-between items-center mb-3">
                                                 <span className="font-semibold text-amber-800">Total:</span>
                                                 <span className="text-lg font-bold text-amber-800">
-                                                    {getTotalPrice().toFixed(2)}€
+                                                    {cartDisplay.totalPrice.toFixed(2)}€
                                                 </span>
                                             </div>
-                                            <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-lg text-sm font-semibold transition-colors duration-300">
-                                                Realizar Pedido ({getTotalItems()} {getTotalItems() === 1 ? 'producto' : 'productos'})
+                                            <button 
+                                                onClick={() => {
+                                                    setShowCart(false);
+                                                    router.push('/pedido');
+                                                }}
+                                                className="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-lg text-sm font-semibold transition-colors duration-300"
+                                            >
+                                                Realizar Pedido ({cartDisplay.totalItems} {cartDisplay.totalItems === 1 ? 'producto' : 'productos'})
                                             </button>
                                         </div>
                                     )}

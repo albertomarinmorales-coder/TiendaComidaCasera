@@ -19,7 +19,7 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
     title: 'Asador El Buen Comer - Comida Para Llevar',
-    description: 'Comida casera para llevar. Especialidades en carnes a la brasa y platos tradicionales. Haz tu pedido por teléfono.',
+    description: 'Comida casera para llevar. Especialidades en pollos asados, a la brasa y platos tradicionales. Haz tu pedido por teléfono.',
 };
 
 export default function RootLayout({
