@@ -5,12 +5,14 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
 
 /**
- * TODO: Reemplazar imágenes placeholder
+ * COMPLETADO: Imágenes reales integradas
  * 
- * Cuando tengas las fotos reales de los productos:
- * 1. Coloca las imágenes en /public/images/menu/
- * 2. Cambia las URLs de placeholder por: /images/menu/nombre-producto.jpg
- * 3. Ejemplo: image: '/images/menu/ensalada-casa.jpg'
+ * Imágenes disponibles y mapeadas:
+ * - Ensaladas: ensalada.jpg, salmorejo.jpg, ensaladilla.jpg
+ * - Guarnición: pimientos.jpg, patatas.jpg  
+ * - Pescados: bacalao.jpg
+ * - Platos combinados: pechiga.jpg
+ * - Salsas: alioli.jpg
  */
 
 interface MenuItem {
@@ -18,7 +20,7 @@ interface MenuItem {
   name: string
   description?: string
   price: string
-  image?: string // URL de la imagen del producto - cambiar por rutas locales cuando tengamos las fotos reales
+  image?: string // URL de la imagen del producto - rutas locales desde /public/images/menu/
 }
 
 interface MenuCategory {
@@ -32,17 +34,17 @@ const menuData: MenuCategory[] = [
     id: 'ensaladas',
     name: 'Ensaladas',
     items: [
-      { id: 1, name: 'Ensalada de casa', price: '6,50', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Ensalada+de+Casa' },
-      { id: 2, name: 'Salmorejo con Jamón y Huevo', description: 'Salmorejo con jamón y huevo.', price: '6,00', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Salmorejo' },
-      { id: 3, name: 'Ensaladilla Rusa', price: '5,00', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Ensaladilla+Rusa' }
+      { id: 1, name: 'Ensalada de casa', price: '6,50', image: '/images/menu/ensalada.jpg' },
+      { id: 2, name: 'Salmorejo con Jamón y Huevo', description: 'Salmorejo con jamón y huevo.', price: '6,00', image: '/images/menu/salmorejo.jpg' },
+      { id: 3, name: 'Ensaladilla Rusa', price: '5,00', image: '/images/menu/ensaladilla.jpg' }
     ]
   },
   {
     id: 'guarnicion',
     name: 'Guarnición',
     items: [
-      { id: 4, name: 'Pimientos fritos', price: '6,00', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Pimientos+Fritos' },
-      { id: 5, name: 'Patatas Fritas Enteras', price: '4,50', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Patatas+Fritas' },
+      { id: 4, name: 'Pimientos fritos', price: '6,00', image: '/images/menu/pimientos.jpg' },
+      { id: 5, name: 'Patatas Fritas Enteras', price: '4,50', image: '/images/menu/patatas.jpg' },
       { id: 6, name: '1/2 Patatas Fritas', price: '3,50', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Media+Patatas' }
     ]
   },
@@ -60,21 +62,21 @@ const menuData: MenuCategory[] = [
     id: 'pescados',
     name: 'Pescados',
     items: [
-      { id: 11, name: 'Bacalao con Tomate Frito', price: '7,00', image: 'https://via.placeholder.com/200x150/1d4ed8/ffffff?text=Bacalao+Tomate' }
+      { id: 11, name: 'Bacalao con Tomate Frito', price: '7,00', image: '/images/menu/bacalao.jpg' }
     ]
   },
   {
     id: 'platos-combinados',
     name: 'Platos Combinados',
     items: [
-      { id: 12, name: 'Pechuga Empanada + Patatas', price: '6,50', image: 'https://via.placeholder.com/200x150/7c2d12/ffffff?text=Pechuga+Empanada' }
+      { id: 12, name: 'Pechuga Empanada + Patatas', price: '6,50', image: '/images/menu/pechiga.jpg' }
     ]
   },
   {
     id: 'salsas',
     name: 'Salsas',
     items: [
-      { id: 13, name: 'Salsa Alioli', price: '1,20', image: 'https://via.placeholder.com/200x150/eab308/ffffff?text=Alioli' }
+      { id: 13, name: 'Salsa Alioli', price: '1,20', image: '/images/menu/alioli.jpg' }
     ]
   },
   {
