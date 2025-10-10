@@ -2,7 +2,7 @@ import Menu from '../../components/Menu'
 
 export default function MenuPage() {
   return (
-    <div className="pt-20">
+    <div className="pt-20 min-h-screen bg-gradient-to-br from-amber-50 to-yellow-50">
       <Menu />
     </div>
   )

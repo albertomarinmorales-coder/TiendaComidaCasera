@@ -45,7 +45,7 @@ const menuData: MenuCategory[] = [
     items: [
       { id: 4, name: 'Pimientos fritos', price: '6,00', image: '/images/menu/pimientos.jpg' },
       { id: 5, name: 'Patatas Fritas Enteras', price: '4,50', image: '/images/menu/patatas.jpg' },
-      { id: 6, name: '1/2 Patatas Fritas', price: '3,50', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Media+Patatas' }
+      { id: 6, name: '1/2 Patatas Fritas', price: '3,50', image: '/images/menu/patatas.jpg' }
     ]
   },
   {
@@ -117,7 +117,7 @@ export default function Menu() {
   }
 
   return (
-    <section id="menu" className="py-16 bg-gradient-to-br from-amber-50 to-yellow-50">
+    <section id="menu" className="py-16">
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -181,7 +181,7 @@ export default function Menu() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.3, delay: itemIndex * 0.05 }}
-                          className="flex gap-4 border-b border-amber-100 pb-4 last:border-b-0 last:pb-0"
+                          className="flex gap-4 border-b border-amber-100 pb-4 last:border-b-0 last:pb-0 hover:bg-amber-50 hover:bg-opacity-70 transition-colors duration-200 cursor-pointer rounded-lg px-2 py-1"
                         >
                           {/* Imagen del producto */}
                           <div className="flex-shrink-0">
@@ -190,7 +190,7 @@ export default function Menu() {
                                 <img
                                   src={item.image}
                                   alt={item.name}
-                                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                  className="w-full h-full object-cover"
                                 />
                               ) : (
                                 <div className="w-full h-full bg-gradient-to-br from-amber-200 to-amber-300 flex items-center justify-center">
