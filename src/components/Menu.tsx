@@ -1,8 +1,9 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp, Plus, Minus, ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
+import { useCart } from '../contexts/CartContext'
 
 /**
  * ✅ COMPLETADO: MENÚ 100% CON IMÁGENES REALES
@@ -110,6 +111,8 @@ const menuData: MenuCategory[] = [
 
 export default function Menu() {
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set(['pollo-asado']))
+  const [showCart, setShowCart] = useState(false)
+  const { cart, addToCart, removeFromCart, getItemQuantity, getTotalItems, getTotalPrice } = useCart()
 
   const toggleCategory = (categoryId: string) => {
     const newOpenCategories = new Set(openCategories)
@@ -120,6 +123,8 @@ export default function Menu() {
     }
     setOpenCategories(newOpenCategories)
   }
+
+
 
   return (
     <section id="menu" className="py-16">
@@ -218,21 +223,66 @@ export default function Menu() {
                           </div>
 
                           {/* Información del producto */}
-                          <div className="flex-1 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                          <div className="flex-1 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
                             <div className="flex-1 min-w-0 flex flex-col justify-center">
                               <h4 className="text-base md:text-lg font-semibold text-amber-900 mb-1 font-playfair break-words">
                                 {item.name}
                               </h4>
                               {item.description && (
-                                <p className="text-amber-700 text-sm leading-relaxed">
+                                <p className="text-amber-700 text-sm leading-relaxed mb-2">
                                   {item.description}
                                 </p>
                               )}
                             </div>
-                            <div className="text-left sm:text-right flex-shrink-0 flex items-center">
+                            <div className="text-left sm:text-right flex-shrink-0 flex flex-col items-end gap-2">
                               <span className="text-lg md:text-xl font-bold text-amber-800">
                                 {item.price}€
                               </span>
+                              
+                              {/* Botones del carrito */}
+                              <div className="flex items-center gap-2">
+                                {getItemQuantity(item.id) === 0 ? (
+                                  <motion.button
+                                    onClick={(e: React.MouseEvent) => {
+                                      e.stopPropagation()
+                                      addToCart(item)
+                                    }}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 shadow-md hover:shadow-lg"
+                                  >
+                                    + Añadir
+                                  </motion.button>
+                                ) : (
+                                  <div className="flex items-center gap-2 bg-amber-100 rounded-lg p-1">
+                                    <motion.button
+                                      onClick={(e: React.MouseEvent) => {
+                                        e.stopPropagation()
+                                        removeFromCart(item.id)
+                                      }}
+                                      whileHover={{ scale: 1.1 }}
+                                      whileTap={{ scale: 0.9 }}
+                                      className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-300"
+                                    >
+                                      <Minus size={16} />
+                                    </motion.button>
+                                    <span className="text-amber-800 font-bold min-w-[24px] text-center">
+                                      {getItemQuantity(item.id)}
+                                    </span>
+                                    <motion.button
+                                      onClick={(e: React.MouseEvent) => {
+                                        e.stopPropagation()
+                                        addToCart(item)
+                                      }}
+                                      whileHover={{ scale: 1.1 }}
+                                      whileTap={{ scale: 0.9 }}
+                                      className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-300"
+                                    >
+                                      <Plus size={16} />
+                                    </motion.button>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </motion.div>
@@ -244,6 +294,106 @@ export default function Menu() {
             </motion.div>
           ))}
         </div>
+
+        {/* Panel del carrito */}
+        <AnimatePresence>
+          {showCart && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+              onClick={() => setShowCart(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-hidden"
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              >
+                <div className="p-6 border-b border-amber-200">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-2xl font-bold text-amber-800 font-playfair">
+                      Mi Carrito
+                    </h3>
+                    <button
+                      onClick={() => setShowCart(false)}
+                      className="text-amber-600 hover:text-amber-800 text-2xl font-bold"
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+
+                <div className="overflow-y-auto max-h-96 p-6">
+                  {cart.length === 0 ? (
+                    <div className="text-center py-8">
+                      <ShoppingCart size={48} className="mx-auto text-amber-300 mb-4" />
+                      <p className="text-amber-600 text-lg">Tu carrito está vacío</p>
+                      <p className="text-amber-500 text-sm mt-2">
+                        Añade algunos productos del menú
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {cart.map((item) => (
+                        <div key={item.id} className="flex items-center gap-3 bg-amber-50 p-3 rounded-lg">
+                          {item.image && (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-12 h-12 rounded-full object-cover"
+                            />
+                          )}
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-amber-900 text-sm">
+                              {item.name}
+                            </h4>
+                            <p className="text-amber-700 text-sm">
+                              {item.price}€ × {item.quantity} = {(parseFloat(item.price.replace(',', '.')) * item.quantity).toFixed(2)}€
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => removeFromCart(item.id)}
+                              className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-sm"
+                            >
+                              <Minus size={12} />
+                            </button>
+                            <span className="text-amber-800 font-bold min-w-[20px] text-center text-sm">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => addToCart(item)}
+                              className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-sm"
+                            >
+                              <Plus size={12} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {cart.length > 0 && (
+                  <div className="p-6 border-t border-amber-200 bg-amber-50">
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-lg font-semibold text-amber-800">Total:</span>
+                      <span className="text-xl font-bold text-amber-800">
+                        {getTotalPrice().toFixed(2)}€
+                      </span>
+                    </div>
+                    <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-semibold transition-colors duration-300">
+                      Realizar Pedido ({getTotalItems()} {getTotalItems() === 1 ? 'producto' : 'productos'})
+                    </button>
+                  </div>
+                )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   )
