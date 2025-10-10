@@ -5,9 +5,9 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
 
 /**
- * COMPLETADO: Imágenes reales integradas
+ * ✅ COMPLETADO: MENÚ 100% CON IMÁGENES REALES
  * 
- * Imágenes disponibles y mapeadas:
+ * Todas las imágenes disponibles y mapeadas:
  * - Ensaladas: ensalada.jpg, salmorejo.jpg, ensaladilla.jpg
  * - Guarnición: pimientos.jpg, patatas.jpg  
  * - Pollo Asado: secreto.jpg, pollo-brasa.jpg, pollo-asado.jpg, medio-pollo-brasa.jpg
@@ -15,6 +15,9 @@ import { useState } from 'react'
  * - Platos combinados: pechiga.jpg
  * - Salsas: alioli.jpg
  * - Bebidas: aquarius-n.jpg, aquarius-l.jpg, coca.jpg, zero.png, fanta-n.jpg, nestea.jpg
+ * - Postres: pan.jpg, arroz.jpg, flan.jpg, natillas.jpg
+ * 
+ * TOTAL: 22/22 productos (100%) ✨
  */
 
 interface MenuItem {
@@ -97,10 +100,10 @@ const menuData: MenuCategory[] = [
     id: 'postres',
     name: 'Postres',
     items: [
-      { id: 20, name: 'Pan de Alcafar', price: '1,00', image: 'https://via.placeholder.com/200x150/92400e/ffffff?text=Pan+Alcafar' },
-      { id: 21, name: 'Arroz con Leche', price: '2,50', image: 'https://via.placeholder.com/200x150/f3f4f6/000000?text=Arroz+Leche' },
-      { id: 22, name: 'Flan', price: '2,50', image: 'https://via.placeholder.com/200x150/fbbf24/000000?text=Flan' },
-      { id: 23, name: 'Natilla', price: '2,50', image: 'https://via.placeholder.com/200x150/fef3c7/000000?text=Natilla' }
+      { id: 20, name: 'Pan de Alcafar', price: '1,00', image: '/images/menu/pan.jpg' },
+      { id: 21, name: 'Arroz con Leche', price: '2,50', image: '/images/menu/arroz.jpg' },
+      { id: 22, name: 'Flan', price: '2,50', image: '/images/menu/flan.jpg' },
+      { id: 23, name: 'Natilla', price: '2,50', image: '/images/menu/natillas.jpg' }
     ]
   }
 ]
@@ -187,16 +190,26 @@ export default function Menu() {
                         >
                           {/* Imagen del producto */}
                           <div className="flex-shrink-0">
-                            <div className="w-24 h-20 md:w-32 md:h-24 lg:w-36 lg:h-28 rounded-xl overflow-hidden bg-amber-100 shadow-md border-2 border-amber-200">
+                            <div className={`w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden bg-gradient-to-br from-amber-50 to-white shadow-2xl drop-shadow-lg border-3 border-amber-300 ${
+                              // Padding extra para bebidas (botellas/latas)
+                              item.image && (item.image.includes('coca') || item.image.includes('fanta') || item.image.includes('nestea') || item.image.includes('zero')) 
+                                ? 'p-3' 
+                                : 'p-1.5'
+                            }`}>
                               {item.image ? (
                                 <img
                                   src={item.image}
                                   alt={item.name}
-                                  className="w-full h-full object-contain bg-white"
+                                  className={`w-full h-full rounded-full ${
+                                    // Object-fit específico para bebidas vs comidas
+                                    item.image.includes('coca') || item.image.includes('fanta') || item.image.includes('nestea') || item.image.includes('zero')
+                                      ? 'object-contain'  // Bebidas: se ven completas
+                                      : 'object-cover'    // Comidas: llenan el círculo
+                                  }`}
                                 />
                               ) : (
-                                <div className="w-full h-full bg-gradient-to-br from-amber-200 to-amber-300 flex items-center justify-center">
-                                  <span className="text-amber-600 text-xs font-medium text-center px-2">
+                                <div className="w-full h-full bg-gradient-to-br from-amber-200 to-amber-300 flex items-center justify-center rounded-full">
+                                  <span className="text-amber-600 text-xs font-medium text-center px-1">
                                     Sin imagen
                                   </span>
                                 </div>
@@ -205,8 +218,8 @@ export default function Menu() {
                           </div>
 
                           {/* Información del producto */}
-                          <div className="flex-1 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
-                            <div className="flex-1 min-w-0">
+                          <div className="flex-1 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div className="flex-1 min-w-0 flex flex-col justify-center">
                               <h4 className="text-base md:text-lg font-semibold text-amber-900 mb-1 font-playfair break-words">
                                 {item.name}
                               </h4>
@@ -216,7 +229,7 @@ export default function Menu() {
                                 </p>
                               )}
                             </div>
-                            <div className="text-left sm:text-right flex-shrink-0">
+                            <div className="text-left sm:text-right flex-shrink-0 flex items-center">
                               <span className="text-lg md:text-xl font-bold text-amber-800">
                                 {item.price}€
                               </span>
