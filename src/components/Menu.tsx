@@ -4,11 +4,21 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
 
+/**
+ * TODO: Reemplazar imágenes placeholder
+ * 
+ * Cuando tengas las fotos reales de los productos:
+ * 1. Coloca las imágenes en /public/images/menu/
+ * 2. Cambia las URLs de placeholder por: /images/menu/nombre-producto.jpg
+ * 3. Ejemplo: image: '/images/menu/ensalada-casa.jpg'
+ */
+
 interface MenuItem {
   id: number
   name: string
   description?: string
   price: string
+  image?: string // URL de la imagen del producto - cambiar por rutas locales cuando tengamos las fotos reales
 }
 
 interface MenuCategory {
@@ -22,71 +32,71 @@ const menuData: MenuCategory[] = [
     id: 'ensaladas',
     name: 'Ensaladas',
     items: [
-      { id: 1, name: 'Ensalada de casa', price: '6,50' },
-      { id: 2, name: 'Salmorejo con Jamón y Huevo', description: 'Salmorejo con jamón y huevo.', price: '6,00' },
-      { id: 3, name: 'Ensaladilla Rusa', price: '5,00' }
+      { id: 1, name: 'Ensalada de casa', price: '6,50', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Ensalada+de+Casa' },
+      { id: 2, name: 'Salmorejo con Jamón y Huevo', description: 'Salmorejo con jamón y huevo.', price: '6,00', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Salmorejo' },
+      { id: 3, name: 'Ensaladilla Rusa', price: '5,00', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Ensaladilla+Rusa' }
     ]
   },
   {
     id: 'guarnicion',
     name: 'Guarnición',
     items: [
-      { id: 4, name: 'Pimientos fritos', price: '6,00' },
-      { id: 5, name: 'Patatas Fritas Enteras', price: '4,50' },
-      { id: 6, name: '1/2 Patatas Fritas', price: '3,50' }
+      { id: 4, name: 'Pimientos fritos', price: '6,00', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Pimientos+Fritos' },
+      { id: 5, name: 'Patatas Fritas Enteras', price: '4,50', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Patatas+Fritas' },
+      { id: 6, name: '1/2 Patatas Fritas', price: '3,50', image: 'https://via.placeholder.com/200x150/f59e0b/ffffff?text=Media+Patatas' }
     ]
   },
   {
     id: 'pollo-asado',
     name: 'Pollo Asados a la Leña',
     items: [
-      { id: 7, name: 'Secreto a la brasa (1 kg.)', description: 'Con ración grande patatas y alioli.', price: '20,95' },
-      { id: 8, name: 'Pollo a la Brasa con Salsa de Limón', description: 'Salsa de tomillo y romero o almendras.', price: '11,00' },
-      { id: 9, name: 'Pollo Asada', description: 'A la leña con salsa de tomillo y romero o almendras', price: '11,00' },
-      { id: 10, name: '1/2 Pollo a la Brasa', description: 'Salsa de limón, tomillo y romero, almendras', price: '6,50' }
+      { id: 7, name: 'Secreto a la brasa (1 kg.)', description: 'Con ración grande patatas y alioli.', price: '20,95', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Secreto+Brasa' },
+      { id: 8, name: 'Pollo a la Brasa con Salsa de Limón', description: 'Salsa de tomillo y romero o almendras.', price: '11,00', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Pollo+Limon' },
+      { id: 9, name: 'Pollo Asada', description: 'A la leña con salsa de tomillo y romero o almendras', price: '11,00', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Pollo+Asada' },
+      { id: 10, name: '1/2 Pollo a la Brasa', description: 'Salsa de limón, tomillo y romero, almendras', price: '6,50', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Medio+Pollo' }
     ]
   },
   {
     id: 'pescados',
     name: 'Pescados',
     items: [
-      { id: 11, name: 'Bacalao con Tomate Frito', price: '7,00' }
+      { id: 11, name: 'Bacalao con Tomate Frito', price: '7,00', image: 'https://via.placeholder.com/200x150/1d4ed8/ffffff?text=Bacalao+Tomate' }
     ]
   },
   {
     id: 'platos-combinados',
     name: 'Platos Combinados',
     items: [
-      { id: 12, name: 'Pechuga Empanada + Patatas', price: '6,50' }
+      { id: 12, name: 'Pechuga Empanada + Patatas', price: '6,50', image: 'https://via.placeholder.com/200x150/7c2d12/ffffff?text=Pechuga+Empanada' }
     ]
   },
   {
     id: 'salsas',
     name: 'Salsas',
     items: [
-      { id: 13, name: 'Salsa Alioli', price: '1,20' }
+      { id: 13, name: 'Salsa Alioli', price: '1,20', image: 'https://via.placeholder.com/200x150/eab308/ffffff?text=Alioli' }
     ]
   },
   {
     id: 'bebidas',
     name: 'Bebidas',
     items: [
-      { id: 14, name: 'Aquarius Naranja (1.5 lt.)', price: '2,30' },
-      { id: 15, name: 'Aquarius (1.5 lt.)', price: '2,30' },
-      { id: 16, name: 'Coca-Cola Sabor Original (2L)', price: '2,30' },
-      { id: 17, name: 'Coca-Cola Zero Azúcar (2L)', price: '2,30' },
-      { id: 18, name: 'Fanta Naranja (2L)', price: '2,30' },
-      { id: 19, name: 'Nestea sin azúcar (1.5 lt)', price: '2,20' }
+      { id: 14, name: 'Aquarius Naranja (1.5 lt.)', price: '2,30', image: 'https://via.placeholder.com/200x150/ea580c/ffffff?text=Aquarius+Naranja' },
+      { id: 15, name: 'Aquarius (1.5 lt.)', price: '2,30', image: 'https://via.placeholder.com/200x150/3b82f6/ffffff?text=Aquarius' },
+      { id: 16, name: 'Coca-Cola Sabor Original (2L)', price: '2,30', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Coca+Cola' },
+      { id: 17, name: 'Coca-Cola Zero Azúcar (2L)', price: '2,30', image: 'https://via.placeholder.com/200x150/000000/ffffff?text=Coca+Zero' },
+      { id: 18, name: 'Fanta Naranja (2L)', price: '2,30', image: 'https://via.placeholder.com/200x150/f97316/ffffff?text=Fanta+Naranja' },
+      { id: 19, name: 'Nestea sin azúcar (1.5 lt)', price: '2,20', image: 'https://via.placeholder.com/200x150/eab308/ffffff?text=Nestea' }
     ]
   },
   {
     id: 'postres',
     name: 'Postres',
     items: [
-      { id: 20, name: 'Pan de Alcafar', price: '1,00' },
-      { id: 21, name: 'Arroz con Leche', price: '2,50' },
-      { id: 22, name: 'Flan', price: '2,50' },
-      { id: 23, name: 'Natilla', price: '2,50' }
+      { id: 20, name: 'Pan de Alcafar', price: '1,00', image: 'https://via.placeholder.com/200x150/92400e/ffffff?text=Pan+Alcafar' },
+      { id: 21, name: 'Arroz con Leche', price: '2,50', image: 'https://via.placeholder.com/200x150/f3f4f6/000000?text=Arroz+Leche' },
+      { id: 22, name: 'Flan', price: '2,50', image: 'https://via.placeholder.com/200x150/fbbf24/000000?text=Flan' },
+      { id: 23, name: 'Natilla', price: '2,50', image: 'https://via.placeholder.com/200x150/fef3c7/000000?text=Natilla' }
     ]
   }
 ]
@@ -169,22 +179,44 @@ export default function Menu() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.3, delay: itemIndex * 0.05 }}
-                          className="flex justify-between items-start border-b border-amber-100 pb-4 last:border-b-0 last:pb-0"
+                          className="flex gap-4 border-b border-amber-100 pb-4 last:border-b-0 last:pb-0"
                         >
-                          <div className="flex-1 pr-4">
-                            <h4 className="text-lg font-semibold text-amber-900 mb-1 font-playfair">
-                              {item.name}
-                            </h4>
-                            {item.description && (
-                              <p className="text-amber-700 text-sm leading-relaxed">
-                                {item.description}
-                              </p>
-                            )}
+                          {/* Imagen del producto */}
+                          <div className="flex-shrink-0">
+                            <div className="w-20 h-20 md:w-28 md:h-28 rounded-xl overflow-hidden bg-amber-100 shadow-md border-2 border-amber-200">
+                              {item.image ? (
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                />
+                              ) : (
+                                <div className="w-full h-full bg-gradient-to-br from-amber-200 to-amber-300 flex items-center justify-center">
+                                  <span className="text-amber-600 text-xs font-medium text-center px-2">
+                                    Sin imagen
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <div className="text-right">
-                            <span className="text-xl font-bold text-amber-800">
-                              {item.price}€
-                            </span>
+
+                          {/* Información del producto */}
+                          <div className="flex-1 flex justify-between items-start">
+                            <div className="flex-1 pr-4">
+                              <h4 className="text-lg font-semibold text-amber-900 mb-1 font-playfair">
+                                {item.name}
+                              </h4>
+                              {item.description && (
+                                <p className="text-amber-700 text-sm leading-relaxed">
+                                  {item.description}
+                                </p>
+                              )}
+                            </div>
+                            <div className="text-right">
+                              <span className="text-xl font-bold text-amber-800">
+                                {item.price}€
+                              </span>
+                            </div>
                           </div>
                         </motion.div>
                       ))}
