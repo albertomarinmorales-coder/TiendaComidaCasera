@@ -13,6 +13,7 @@ import { useState } from 'react'
  * - Pescados: bacalao.jpg
  * - Platos combinados: pechiga.jpg
  * - Salsas: alioli.jpg
+ * - Bebidas: aquarius-n.jpg, aquarius-l.jpg, coca.jpg, zero.png, fanta-n.jpg, nestea.jpg
  */
 
 interface MenuItem {
@@ -83,12 +84,12 @@ const menuData: MenuCategory[] = [
     id: 'bebidas',
     name: 'Bebidas',
     items: [
-      { id: 14, name: 'Aquarius Naranja (1.5 lt.)', price: '2,30', image: 'https://via.placeholder.com/200x150/ea580c/ffffff?text=Aquarius+Naranja' },
-      { id: 15, name: 'Aquarius (1.5 lt.)', price: '2,30', image: 'https://via.placeholder.com/200x150/3b82f6/ffffff?text=Aquarius' },
-      { id: 16, name: 'Coca-Cola Sabor Original (2L)', price: '2,30', image: 'https://via.placeholder.com/200x150/dc2626/ffffff?text=Coca+Cola' },
-      { id: 17, name: 'Coca-Cola Zero Azúcar (2L)', price: '2,30', image: 'https://via.placeholder.com/200x150/000000/ffffff?text=Coca+Zero' },
-      { id: 18, name: 'Fanta Naranja (2L)', price: '2,30', image: 'https://via.placeholder.com/200x150/f97316/ffffff?text=Fanta+Naranja' },
-      { id: 19, name: 'Nestea sin azúcar (1.5 lt)', price: '2,20', image: 'https://via.placeholder.com/200x150/eab308/ffffff?text=Nestea' }
+      { id: 14, name: 'Aquarius Naranja (1.5 lt.)', price: '2,30', image: '/images/menu/aquarius-n.jpg' },
+      { id: 15, name: 'Aquarius (1.5 lt.)', price: '2,30', image: '/images/menu/aquarius-l.jpg' },
+      { id: 16, name: 'Coca-Cola Sabor Original (2L)', price: '2,30', image: '/images/menu/coca.jpg' },
+      { id: 17, name: 'Coca-Cola Zero Azúcar (2L)', price: '2,30', image: '/images/menu/zero.png' },
+      { id: 18, name: 'Fanta Naranja (2L)', price: '2,30', image: '/images/menu/fanta-n.jpg' },
+      { id: 19, name: 'Nestea sin azúcar (1.5 lt)', price: '2,20', image: '/images/menu/nestea.jpg' }
     ]
   },
   {
