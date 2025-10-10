@@ -182,16 +182,16 @@ export default function Menu() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.3, delay: itemIndex * 0.05 }}
-                          className="flex gap-4 border-b border-amber-100 pb-4 last:border-b-0 last:pb-0 hover:bg-amber-50 hover:bg-opacity-70 transition-colors duration-200 cursor-pointer rounded-lg px-2 py-1"
+                          className="flex gap-3 md:gap-4 border-b border-amber-100 pb-4 last:border-b-0 last:pb-0 hover:bg-amber-50 hover:bg-opacity-70 transition-colors duration-200 cursor-pointer rounded-lg px-3 py-2"
                         >
                           {/* Imagen del producto */}
                           <div className="flex-shrink-0">
-                            <div className="w-20 h-20 md:w-28 md:h-28 rounded-xl overflow-hidden bg-amber-100 shadow-md border-2 border-amber-200">
+                            <div className="w-24 h-20 md:w-32 md:h-24 lg:w-36 lg:h-28 rounded-xl overflow-hidden bg-amber-100 shadow-md border-2 border-amber-200">
                               {item.image ? (
                                 <img
                                   src={item.image}
                                   alt={item.name}
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain bg-white"
                                 />
                               ) : (
                                 <div className="w-full h-full bg-gradient-to-br from-amber-200 to-amber-300 flex items-center justify-center">
@@ -204,9 +204,9 @@ export default function Menu() {
                           </div>
 
                           {/* Información del producto */}
-                          <div className="flex-1 flex justify-between items-start">
-                            <div className="flex-1 pr-4">
-                              <h4 className="text-lg font-semibold text-amber-900 mb-1 font-playfair">
+                          <div className="flex-1 flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="text-base md:text-lg font-semibold text-amber-900 mb-1 font-playfair break-words">
                                 {item.name}
                               </h4>
                               {item.description && (
@@ -215,8 +215,8 @@ export default function Menu() {
                                 </p>
                               )}
                             </div>
-                            <div className="text-right">
-                              <span className="text-xl font-bold text-amber-800">
+                            <div className="text-left sm:text-right flex-shrink-0">
+                              <span className="text-lg md:text-xl font-bold text-amber-800">
                                 {item.price}€
                               </span>
                             </div>
