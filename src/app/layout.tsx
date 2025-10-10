@@ -1,11 +1,20 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Playfair_Display, Open_Sans } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from 'next-themes';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const inter = Inter({ subsets: ['latin'] });
+const playfairDisplay = Playfair_Display({ 
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap'
+});
+
+const openSans = Open_Sans({ 
+  subsets: ['latin'],
+  variable: '--font-open-sans',
+  display: 'swap'
+});
 
 export const metadata: Metadata = {
     title: 'El Buen Comerán - Asador Restaurante',
@@ -19,14 +28,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="es" suppressHydrationWarning>
-            <body className={inter.className}>
-                <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-                    <div className="flex flex-col min-h-screen">
-                        <Header />
-                        <main className="flex-grow">{children}</main>
-                        <Footer />
-                    </div>
-                </ThemeProvider>
+            <body className={`${openSans.variable} ${playfairDisplay.variable} font-sans`}>
+                <div className="flex flex-col min-h-screen">
+                    <Header />
+                    <main className="flex-grow">{children}</main>
+                    <Footer />
+                </div>
             </body>
         </html>
     );

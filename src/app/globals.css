@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font Variables */
+:root {
+  --font-playfair: 'Playfair Display', serif;
+  --font-open-sans: 'Open Sans', sans-serif;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

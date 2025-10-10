@@ -8,19 +8,19 @@ export default function Specialties() {
       id: 1,
       title: "Pollos asados o a la brasa",
       description: "Deliciosos pollos cocinados a la brasa, jugosos por dentro y crujientes por fuera",
-      image: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/images/pollo.jpg"
     },
     {
       id: 2, 
       title: "Menú del día",
       description: "Diferentes opciones cada día, preparadas con ingredientes frescos y de temporada",
-      image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/images/menu.jpg"
     },
     {
       id: 3,
       title: "Comida Casera",
       description: "Platos tradicionales con el auténtico sabor de casa, elaborados con recetas familiares",
-      image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+      image: "/images/casera.jpg"
     }
   ]
 
@@ -34,7 +34,7 @@ export default function Specialties() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-amber-800 dark:text-amber-100 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-amber-800 dark:text-amber-100 mb-4 font-playfair">
             Nuestras Especialidades
           </h2>
           <p className="text-lg text-amber-700 dark:text-amber-200 max-w-2xl mx-auto">
@@ -62,7 +62,7 @@ export default function Specialties() {
               </div>
               
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100 mb-3">
+                <h3 className="text-xl font-semibold text-amber-800 dark:text-amber-100 mb-3 font-playfair">
                   {item.title}
                 </h3>
                 <p className="text-amber-700 dark:text-amber-200 leading-relaxed">
