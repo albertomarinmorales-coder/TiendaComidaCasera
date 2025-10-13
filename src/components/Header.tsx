@@ -6,6 +6,8 @@ import { Menu, X, ShoppingCart, Plus, Minus } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../contexts/CartContext'
 import { useCartDisplay } from '../hooks/useCartDisplay'
+import Image from 'next/image'
+import cartelImage from '../images/cartel.png'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -28,8 +30,15 @@ export default function Header() {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="bg-amber-600 text-white p-3 rounded-full">
-              <span className="font-bold text-lg">ABC</span>
+            <div className="w-16 h-16 rounded-lg shadow-lg border-2 border-amber-600 bg-amber-50 flex items-center justify-center p-1">
+              <Image
+                src={cartelImage}
+                alt="Asador El Buen Comer Logo"
+                width={56}
+                height={56}
+                className="w-14 h-14 rounded-sm shadow-xl"
+                priority
+              />
             </div>
             <div>
               <h1 className="text-xl md:text-2xl font-bold text-amber-800 dark:text-amber-100">

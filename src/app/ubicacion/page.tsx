@@ -148,7 +148,7 @@ export default function Ubicacion() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-amber-50 rounded-xl overflow-hidden h-96 flex items-center justify-center py-8"
+            className="bg-amber-50 rounded-xl overflow-hidden h-96 flex items-center justify-center py-8 shadow-lg"
           >
             <Map />
           </motion.div>
