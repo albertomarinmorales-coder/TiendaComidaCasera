@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     title: 'Comida Casera - Asador Restaurante',
     description: 'Disfruta de la mejor comida tradicional en nuestro asador restaurante',
     icons: {
-        icon: '/favicon.svg',
+        icon: '/pollo-asado.png',
     },
 };
 

@@ -99,9 +99,9 @@ export default function Header() {
                     initial={{ opacity: 0, y: -10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                    className="absolute right-0 top-12 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-amber-200 dark:border-amber-700 w-96 max-h-96 overflow-hidden z-50"
+                    className="absolute right-0 top-12 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-amber-200 dark:border-amber-700 w-96 max-h-[80vh] flex flex-col overflow-hidden z-50"
                   >
-                    <div className="p-4 border-b border-amber-200 dark:border-amber-700 bg-amber-50 dark:bg-amber-900">
+                    <div className="p-4 border-b border-amber-200 dark:border-amber-700 bg-amber-50 dark:bg-amber-900 flex-shrink-0">
                       <div className="flex items-center justify-between">
                         <h3 className="text-lg font-bold text-amber-800 dark:text-amber-100">
                           Mi Carrito
@@ -115,7 +115,7 @@ export default function Header() {
                       </div>
                     </div>
 
-                    <div className="max-h-64 overflow-y-auto p-4">
+                    <div className="overflow-y-auto p-4 flex-1">
                       {cart.length === 0 ? (
                         <div className="text-center py-6">
                           <ShoppingCart size={36} className="mx-auto text-amber-300 mb-3" />
@@ -167,7 +167,7 @@ export default function Header() {
                     </div>
 
                     {cart.length > 0 && (
-                      <div className="p-4 border-t border-amber-200 dark:border-amber-700 bg-amber-50 dark:bg-amber-900">
+                      <div className="p-4 border-t border-amber-200 dark:border-amber-700 bg-amber-50 dark:bg-amber-900 flex-shrink-0">
                         <div className="flex justify-between items-center mb-3">
                           <span className="font-semibold text-amber-800 dark:text-amber-200">Total:</span>
                           <span className="text-lg font-bold text-amber-800 dark:text-amber-100">
