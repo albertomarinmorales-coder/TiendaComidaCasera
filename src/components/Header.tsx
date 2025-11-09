@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Menu, X, ShoppingCart, Plus, Minus } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../contexts/CartContext'
@@ -9,15 +11,32 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const { cart, addToCart, removeFromCart, getTotalItems, getTotalPrice } = useCart()
+  const router = useRouter()
+  const cartRef = useRef<HTMLDivElement>(null)
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
+  // Cerrar el carrito cuando se hace clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
+        setShowCart(false)
+      }
+    }
+
+    if (showCart) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showCart])
+
   const navItems = [
-    { name: 'Inicio', href: '#inicio' },
-    { name: 'Pedido Online', href: '#pedido' },
-    { name: 'Ubicación', href: '#ubicacion' },
-    { name: 'Horarios', href: '#horarios' },
-    { name: 'Contacto', href: '#contacto' },
+    { name: 'Inicio', href: '/' },
+    { name: 'Pedido Online', href: '/menu' },
+    { name: 'Contacto', href: '/#ubicacion' },
   ]
 
   return (
@@ -25,42 +44,40 @@ export default function Header() {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center space-x-3 cursor-pointer">
             <div className="bg-amber-600 text-white p-3 rounded-full">
-              <span className="font-bold text-lg">ABC</span>
+              <span className="font-bold text-lg">CC</span>
             </div>
             <div>
               <h1 className="text-xl md:text-2xl font-bold text-amber-800 dark:text-amber-100">
-                Asador El Buen Comer
+                Comida Casera
               </h1>
               <p className="text-sm text-amber-700 dark:text-amber-300">
                 Comida Casera • Carnes a la Brasa
               </p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-16">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-colors duration-200"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* Carrito y Mobile Menu */}
           <div className="flex items-center space-x-4">
             {/* Carrito - Ahora visible en todas las pantallas */}
-            <div className="relative">
-              <motion.button
+            <div className="relative" ref={cartRef}>
+              <button
                 onClick={() => setShowCart(!showCart)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative p-3 rounded-full bg-amber-600 text-white hover:bg-amber-700 transition-colors flex items-center gap-2 shadow-lg"
+                className="relative p-3 rounded-full bg-amber-600 text-white hover:bg-amber-700 active:bg-amber-800 transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl border-b-4 border-amber-800 transform hover:scale-105 active:scale-100"
               >
                 <ShoppingCart size={20} />
                 {getTotalItems() > 0 && (
@@ -73,7 +90,7 @@ export default function Header() {
                     </span>
                   </>
                 )}
-              </motion.button>
+              </button>
 
               {/* Dropdown del carrito */}
               <AnimatePresence>
@@ -129,7 +146,7 @@ export default function Header() {
                               <div className="flex items-center gap-1 flex-shrink-0">
                                 <button
                                   onClick={() => removeFromCart(item.id)}
-                                  className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-xs"
+                                  className="bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white w-6 h-6 rounded flex items-center justify-center text-xs transition-all duration-150 shadow-sm transform hover:scale-110 active:scale-100"
                                 >
                                   <Minus size={10} />
                                 </button>
@@ -138,7 +155,7 @@ export default function Header() {
                                 </span>
                                 <button
                                   onClick={() => addToCart(item)}
-                                  className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-xs"
+                                  className="bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white w-6 h-6 rounded flex items-center justify-center text-xs transition-all duration-150 shadow-sm transform hover:scale-110 active:scale-100"
                                 >
                                   <Plus size={10} />
                                 </button>
@@ -157,7 +174,10 @@ export default function Header() {
                             {getTotalPrice().toFixed(2)}€
                           </span>
                         </div>
-                        <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-lg text-sm font-semibold transition-colors duration-300">
+                        <button 
+                          onClick={() => router.push('/checkout')}
+                          className="w-full bg-amber-600 hover:bg-amber-700 border-b-4 border-amber-800 hover:border-amber-900 text-white py-2 rounded-lg text-sm font-semibold transition-all duration-200 shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                        >
                           Realizar Pedido ({getTotalItems()} {getTotalItems() === 1 ? 'producto' : 'productos'})
                         </button>
                       </div>
@@ -180,14 +200,14 @@ export default function Header() {
         {isMenuOpen && (
           <div className="lg:hidden mt-4 py-4 border-t border-gray-200 dark:border-gray-700">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className="block py-2 px-4 text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
         )}

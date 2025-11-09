@@ -18,8 +18,11 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-    title: 'El Buen Comerán - Asador Restaurante',
+    title: 'Comida Casera - Asador Restaurante',
     description: 'Disfruta de la mejor comida tradicional en nuestro asador restaurante',
+    icons: {
+        icon: '/favicon.svg',
+    },
 };
 
 export default function RootLayout({

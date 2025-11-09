@@ -3,30 +3,15 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronUp, Plus, Minus, ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useCart } from '../contexts/CartContext'
-
-/**
- * ✅ COMPLETADO: MENÚ 100% CON IMÁGENES REALES
- * 
- * Todas las imágenes disponibles y mapeadas:
- * - Ensaladas: ensalada.jpg, salmorejo.jpg, ensaladilla.jpg
- * - Guarnición: pimientos.jpg, patatas.jpg  
- * - Pollo Asado: secreto.jpg, pollo-brasa.jpg, pollo-asado.jpg, medio-pollo-brasa.jpg
- * - Pescados: bacalao.jpg
- * - Platos combinados: pechiga.jpg
- * - Salsas: alioli.jpg
- * - Bebidas: aquarius-n.jpg, aquarius-l.jpg, coca.jpg, zero.png, fanta-n.jpg, nestea.jpg
- * - Postres: pan.jpg, arroz.jpg, flan.jpg, natillas.jpg
- * 
- * TOTAL: 22/22 productos (100%) ✨
- */
 
 interface MenuItem {
   id: number
   name: string
   description?: string
   price: string
-  image?: string // URL de la imagen del producto - rutas locales desde /public/images/menu/
+  image?: string
 }
 
 interface MenuCategory {
@@ -40,7 +25,7 @@ const menuData: MenuCategory[] = [
     id: 'ensaladas',
     name: 'Ensaladas',
     items: [
-      { id: 1, name: 'Ensalada de casa', price: '6,50', image: '/images/menu/ensalada.jpg' },
+      { id: 1, name: 'Ensalada de la casa', price: '6,50', image: '/images/menu/ensalada.jpg' },
       { id: 2, name: 'Salmorejo con Jamón y Huevo', description: 'Salmorejo con jamón y huevo.', price: '6,00', image: '/images/menu/salmorejo.jpg' },
       { id: 3, name: 'Ensaladilla Rusa', price: '5,00', image: '/images/menu/ensaladilla.jpg' }
     ]
@@ -60,7 +45,7 @@ const menuData: MenuCategory[] = [
     items: [
       { id: 7, name: 'Secreto a la brasa (1 kg.)', description: 'Con ración grande patatas y alioli.', price: '20,95', image: '/images/menu/secreto.jpg' },
       { id: 8, name: 'Pollo a la Brasa con Salsa de Limón', description: 'Salsa de tomillo y romero o almendras.', price: '11,00', image: '/images/menu/pollo-brasa.jpg' },
-      { id: 9, name: 'Pollo Asada', description: 'A la leña con salsa de tomillo y romero o almendras', price: '11,00', image: '/images/menu/pollo-asado.jpg' },
+      { id: 9, name: 'Pollo Asado', description: 'A la leña con salsa de tomillo y romero o almendras', price: '11,00', image: '/images/menu/pollo-asado.jpg' },
       { id: 10, name: '1/2 Pollo a la Brasa', description: 'Salsa de limón, tomillo y romero, almendras', price: '6,50', image: '/images/menu/medio-pollo-brasa.jpg' }
     ]
   },
@@ -89,7 +74,7 @@ const menuData: MenuCategory[] = [
     id: 'postres',
     name: 'Postres',
     items: [
-      { id: 20, name: 'Pan de Alcafar', price: '1,00', image: '/images/menu/pan.jpg' },
+      { id: 20, name: 'Pan de Alfacar', price: '1,00', image: '/images/menu/pan.jpg' },
       { id: 21, name: 'Arroz con Leche', price: '2,50', image: '/images/menu/arroz.jpg' },
       { id: 22, name: 'Flan', price: '2,50', image: '/images/menu/flan.jpg' },
       { id: 23, name: 'Natilla', price: '2,50', image: '/images/menu/natillas.jpg' }
@@ -110,9 +95,10 @@ const menuData: MenuCategory[] = [
 ]
 
 export default function Menu() {
-  const [openCategories, setOpenCategories] = useState<Set<string>>(new Set(['pollo-asado']))
+  const [openCategories, setOpenCategories] = useState<Set<string>>(new Set())
   const [showCart, setShowCart] = useState(false)
   const { cart, addToCart, removeFromCart, getItemQuantity, getTotalItems, getTotalPrice } = useCart()
+  const router = useRouter()
 
   const toggleCategory = (categoryId: string) => {
     const newOpenCategories = new Set(openCategories)
@@ -125,9 +111,8 @@ export default function Menu() {
   }
 
 
-
   return (
-    <section id="menu" className="py-16">
+    <section id="menu" className="py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -135,7 +120,7 @@ export default function Menu() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-amber-800 mb-4 font-playfair">
             Nuestra Carta
@@ -205,6 +190,7 @@ export default function Menu() {
                                 <img
                                   src={item.image}
                                   alt={item.name}
+                                  loading="lazy"
                                   className={`w-full h-full rounded-full ${
                                     // Object-fit específico para bebidas vs comidas
                                     item.image.includes('coca') || item.image.includes('fanta') || item.image.includes('nestea') || item.image.includes('zero')
@@ -242,44 +228,38 @@ export default function Menu() {
                               {/* Botones del carrito */}
                               <div className="flex items-center gap-2">
                                 {getItemQuantity(item.id) === 0 ? (
-                                  <motion.button
+                                  <button
                                     onClick={(e: React.MouseEvent) => {
                                       e.stopPropagation()
                                       addToCart(item)
                                     }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 shadow-md hover:shadow-lg"
+                                    className="bg-amber-600 hover:bg-amber-700 border-b-4 border-amber-800 hover:border-amber-900 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
                                   >
                                     + Añadir
-                                  </motion.button>
+                                  </button>
                                 ) : (
                                   <div className="flex items-center gap-2 bg-amber-100 rounded-lg p-1">
-                                    <motion.button
+                                    <button
                                       onClick={(e: React.MouseEvent) => {
                                         e.stopPropagation()
                                         removeFromCart(item.id)
                                       }}
-                                      whileHover={{ scale: 1.1 }}
-                                      whileTap={{ scale: 0.9 }}
-                                      className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-300"
+                                      className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm"
                                     >
                                       <Minus size={16} />
-                                    </motion.button>
+                                    </button>
                                     <span className="text-amber-800 font-bold min-w-[24px] text-center">
                                       {getItemQuantity(item.id)}
                                     </span>
-                                    <motion.button
+                                    <button
                                       onClick={(e: React.MouseEvent) => {
                                         e.stopPropagation()
                                         addToCart(item)
                                       }}
-                                      whileHover={{ scale: 1.1 }}
-                                      whileTap={{ scale: 0.9 }}
-                                      className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-colors duration-300"
+                                      className="bg-amber-600 hover:bg-amber-700 text-white w-8 h-8 rounded-md flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm"
                                     >
                                       <Plus size={16} />
-                                    </motion.button>
+                                    </button>
                                   </div>
                                 )}
                               </div>
@@ -357,7 +337,7 @@ export default function Menu() {
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => removeFromCart(item.id)}
-                              className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-sm"
+                              className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-sm transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm"
                             >
                               <Minus size={12} />
                             </button>
@@ -366,7 +346,7 @@ export default function Menu() {
                             </span>
                             <button
                               onClick={() => addToCart(item)}
-                              className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-sm"
+                              className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-sm transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm"
                             >
                               <Plus size={12} />
                             </button>
@@ -385,7 +365,10 @@ export default function Menu() {
                         {getTotalPrice().toFixed(2)}€
                       </span>
                     </div>
-                    <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-lg font-semibold transition-colors duration-300">
+                    <button 
+                      onClick={() => router.push('/checkout')}
+                      className="w-full bg-amber-600 hover:bg-amber-700 border-b-4 border-amber-800 hover:border-amber-900 text-white py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                    >
                       Realizar Pedido ({getTotalItems()} {getTotalItems() === 1 ? 'producto' : 'productos'})
                     </button>
                   </div>

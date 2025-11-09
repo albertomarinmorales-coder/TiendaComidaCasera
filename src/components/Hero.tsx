@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight, Star, Clock, Award } from 'lucide-react'
+import Link from 'next/link'
 import heroImage from '../images/hero-image.jpg'
 
 const Hero: React.FC = () => {
@@ -33,7 +34,7 @@ const Hero: React.FC = () => {
             className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-amber-100 text-center w-full font-playfair"
           >
             Bienvenido a
-            <span className="block text-amber-300">Asador El Buen Comer</span>
+            <span className="block text-amber-300">Comida Casera</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -75,22 +76,18 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="group bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl"
-            >
-              <span>Comenzar Pedido Online</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
+            <Link href="/menu">
+              <button className="bg-amber-600 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl border-b-4 border-amber-800 hover:bg-amber-700 active:bg-amber-800 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center space-x-2">
+                <span>Comenzar Pedido Online</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </Link>
             
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="group bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"
-            >
-              Llamar para Ordenar
-            </motion.button>
+            <a href="tel:512510344">
+              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl border-b-4 border-green-800 hover:bg-green-700 active:bg-green-800 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0">
+                Llama para pedir
+              </button>
+            </a>
           </motion.div>
         </motion.div>
 
@@ -111,5 +108,4 @@ const Hero: React.FC = () => {
     </section>
   )
 }
-
 export default Hero

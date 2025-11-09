@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../contexts/CartContext';
@@ -9,12 +10,13 @@ import { useCart } from '../contexts/CartContext';
 const Navbar: React.FC = () => {
     const { cart, getTotalItems, getTotalPrice, addToCart, removeFromCart } = useCart();
     const [showCart, setShowCart] = useState(false);
+    const router = useRouter();
 
     return (
         <nav className="bg-amber-800 p-4 shadow-lg relative z-40">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="text-amber-100 text-lg font-bold font-playfair">
-                    <Link href="/">Asador El Buen Comer</Link>
+                    <Link href="/">Comida Casera</Link>
                 </div>
                 
                 <div className="flex items-center space-x-6">
@@ -27,11 +29,9 @@ const Navbar: React.FC = () => {
 
                     {/* Carrito en Navbar */}
                     <div className="relative">
-                        <motion.button
+                        <button
                             onClick={() => setShowCart(!showCart)}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="relative bg-amber-700 hover:bg-amber-600 text-white p-2 rounded-full transition-colors duration-300 flex items-center gap-2"
+                            className="relative bg-amber-700 hover:bg-amber-600 border-b-4 border-amber-900 text-white p-2 rounded-full transition-all duration-200 flex items-center gap-2 hover:scale-105 active:scale-95 shadow-lg"
                         >
                             <ShoppingCart size={20} />
                             {getTotalItems() > 0 && (
@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
                                     </span>
                                 </>
                             )}
-                        </motion.button>
+                        </button>
 
                         {/* Dropdown del carrito */}
                         <AnimatePresence>
@@ -100,7 +100,7 @@ const Navbar: React.FC = () => {
                                                         <div className="flex items-center gap-1 flex-shrink-0">
                                                             <button
                                                                 onClick={() => removeFromCart(item.id)}
-                                                                className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-xs"
+                                                                className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-xs transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm"
                                                             >
                                                                 <Minus size={10} />
                                                             </button>
@@ -109,7 +109,7 @@ const Navbar: React.FC = () => {
                                                             </span>
                                                             <button
                                                                 onClick={() => addToCart(item)}
-                                                                className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-xs"
+                                                                className="bg-amber-600 hover:bg-amber-700 text-white w-6 h-6 rounded flex items-center justify-center text-xs transition-all duration-200 hover:scale-110 active:scale-95 shadow-sm"
                                                             >
                                                                 <Plus size={10} />
                                                             </button>
@@ -128,7 +128,10 @@ const Navbar: React.FC = () => {
                                                     {getTotalPrice().toFixed(2)}€
                                                 </span>
                                             </div>
-                                            <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-lg text-sm font-semibold transition-colors duration-300">
+                                            <button 
+                                                onClick={() => router.push('/checkout')}
+                                                className="w-full bg-amber-600 hover:bg-amber-700 border-b-4 border-amber-800 hover:border-amber-900 text-white py-2 rounded-lg text-sm font-semibold transition-all duration-200 shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                                            >
                                                 Realizar Pedido ({getTotalItems()} {getTotalItems() === 1 ? 'producto' : 'productos'})
                                             </button>
                                         </div>
